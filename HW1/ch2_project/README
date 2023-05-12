@@ -1,0 +1,73 @@
+Linux Kernel Module -- birthday 
+============
+Project Description
+This project is a simple implementation of a linked list in the Linux kernel. 
+It allows the user to store and manipulate a list of birthdays, consisting of the month and year of each birthday, 
+as well as the gender of the person.
+
+Installation
+This code can be compiled as a kernel module and inserted into the kernel using the insmod command. 
+To build the module, navigate to the directory containing the source code and run the command make. 
+This will generate a file called birthday.ko.
+
+Installation cmd :
+    sudo insmod birthday.ko
+Unstallation cmd :
+    sudo rmsmod birthday.ko
+To insert the module into the kernel, use the command sudo insmod birthday.ko.
+
+Usage
+Once the module is inserted, it can be used to create a linked list of birthdays. The user can add birthdays to the list using the push function, delete birthdays using the delete function, and traverse the list using the Traversal function.
+============
+
+Makefile : 
+This Makefile is used to build the kernel module birthday.ko. 
+While the Makefile is provided as is, 
+there are a few issues that may arise when executing it. 
+These issues and possible solutions are described below:
+
+Kernel source not found:
+If the kernel source is not installed on the system, 
+the Makefile will not be able to locate the necessary kernel headers to build the module. 
+This can be resolved by installing the kernel headers for the running kernel version using the package manager for your distribution.
+
+KDIR not set:
+The Makefile relies on the KDIR environment variable to point to the kernel source directory. 
+If KDIR is not set or is set incorrectly, the build process will fail. 
+Make sure that KDIR is set to the correct path before running the make command.
+
+Incorrect syntax:
+Any typo or syntax error in the Makefile can cause the build process to fail. 
+Make sure that the Makefile syntax is correct and that there are no typos.
+
+Permission issues:
+If you encounter a permission issue while running make, 
+try running the command with sudo or as the root user.
+
+Compiler version mismatch:
+It is possible that the compiler version used to build the kernel headers and the one used to build the module are different. 
+This can cause compilation errors. Ensure that the same version of the compiler is used to build both the kernel headers and the module.
+
+
+If you encounter any other issues while running the Makefile, 
+please refer to the kernel module documentation or seek assistance from the relevant support channels.
+----
+
+Functions
+create_new_node(int month, int year, int gender)
+This function creates a new node for the linked list, with the given month, year, and gender values.
+
+push(struct_birthday* list, int month, int year, int gender)
+This function adds a new node to the end of the linked list, with the given month, year, and gender values.
+
+delete(struct_birthday* list, struct_birthday* node)
+This function removes a node from the linked list, given a pointer to the node to be deleted.
+
+Traversal(const struct_birthday* list)
+This function traverses the linked list and prints out the month and year of each birthday.
+
+License
+This project is licensed under the GPL License. See the LICENSE file for details.
+
+Author
+This project was created by NTR.

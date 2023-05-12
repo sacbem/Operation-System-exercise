@@ -1,0 +1,27 @@
+2_15.c 
+============
+Function Description
+The program contains the following functions:
+
+int copy_file(char FileSou[], char FileDest[])
+
+This function uses the FileSou parameter as the path and name of the source file,
+and the FileDest parameter as the path and name of the destination file.
+When the function successfully copies the source file to the destination file,
+it returns 0,
+otherwise it returns 1.
+int main()
+
+This function is used to test the copy_file() function,
+copying the ./test.txt file to the ./testT.txt file.
+Usage
+
+Compile the code and run the program, which will copy the source file to the destination file.
+Note:
+
+Please make sure that the source file exists and is readable, 
+and a new file will be automatically created if the destination file does not exist or is blank.
+
+If an error occurs during execution, the program will display the message "Failed to open file".
+
+Please check if the code meets your needs.

@@ -1,0 +1,17 @@
+3_14.c
+============
+Description
+This program takes an integer input from the user and generates a sequence of numbers using the following rules:
+
+If the number is even, divide it by 2.
+If the number is odd, multiply it by 3 and add 1.
+The sequence will continue until the number reaches 1, and then the program will terminate.
+
+Usage
+Compile the program using a C compiler such as gcc.
+Run the compiled program from the command line.
+Enter a positive integer greater than 0 when prompted.
+Notes
+If the user enters a non-positive integer or 0, the program will display an error message and terminate.
+If the program encounters an error during execution, such as a failed fork, it will display an error message and terminate.
+The program will display the generated sequence of numbers in the format "number1, number2, ... , 1."

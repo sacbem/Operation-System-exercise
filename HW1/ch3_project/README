@@ -1,0 +1,79 @@
+unix_shell
+============
+Project Description
+This is a simple shell program written in C that allows the user to execute basic commands such "as" "cd", "ls", "pwd", and "history". 
+The program also supports executing external commands using fork and execvp.
+
+Usage
+To run the shell program, simply compile the main.c file using a C compiler and run the executable. 
+The shell will prompt the user with shell_> and wait for input.
+
+Notice 
+"History Command"
+The history command is a built-in command in the shell program that allows the user to view a list of previously executed commands in the current shell session.
+----
+Function Name: cmd_line_read
+
+Parameters: None
+
+Return Type: char* - a pointer to a character buffer containing the command line read from standard input
+
+Functionality: This function reads a command line from standard input using fgets and returns the buffer containing the command line.
+---
+Function Name: cmd_get_arg
+
+Parameters: char* "cmd_line" - a pointer to a character buffer containing the command line
+
+Return Type: char** - a pointer to an array of pointers to character buffers representing the arguments of the command
+
+Functionality: This function takes a command line as input, 
+               tokenizes the command line using strtok and returns an array of pointers to character buffers containing the individual arguments of the command.
+---
+Function Name: cmd_analysis
+
+Parameters: char* "cmd_line" - a pointer to a character buffer containing the command line, 
+            int* "stat" - a pointer to an integer array representing the statistics of the command execution
+
+Return Type: int - an integer representing the command id of the command
+
+Functionality: This function takes a command line and an integer array representing the statistics of the command execution as input, 
+               analyzes the command line to determine the command id and updates the statistics array accordingly.
+
+---
+Function Name: push_command_log
+
+Parameters: char*** "history_log" - a pointer to a pointer to an array of pointers to character buffers representing the command history log, 
+            char* "cmd_line" - a pointer to a character buffer containing the command line, 
+            int* "count" - a pointer to an integer representing the number of commands in the history log
+
+Return Type: void
+
+Functionality: This function takes a pointer to a pointer to an array of pointers to character buffers representing the command history log, 
+               a pointer to a character buffer containing the command line and a pointer to an integer representing the number of commands in the history log as input, 
+               adds the command line to the history log and updates the count of commands in the history log.
+---
+Function Name: shell_cd_command
+
+Parameters: char** "args" - a pointer to an array of pointers to character buffers representing the arguments of the cd command
+
+Return Type: void
+
+Functionality: This function takes an array of pointers to character buffers representing the arguments of the cd command as input, changes the current working directory using chdir and prints the current working directory.
+---
+Function Name: shell_history_command
+
+Parameters: char** "log" - a pointer to an array of pointers to character buffers representing the command history log, 
+            int "log_size" - an integer representing the number of commands in the history log
+
+Return Type: void
+
+Functionality: This function takes an array of pointers to character buffers representing the command history log and an integer representing the number of commands in the history log as input, prints the command history log with indices.
+---
+
+Function Name: shell_default_command
+
+Parameters: char** "args" - a pointer to an array of pointers to character buffers representing the arguments of the command
+
+Return Type: void
+
+Functionality: This function takes an array of pointers to character buffers representing the arguments of the command as input, forks a child process using fork, executes the command using execvp and waits for the child process to complete using wait.
