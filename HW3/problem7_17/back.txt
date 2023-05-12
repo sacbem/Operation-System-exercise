@@ -1,0 +1,96 @@
+#include <stdio.h>
+#include <stdbool.h>
+#include <pthread.h>
+#include <unistd.h>
+
+pthread_mutex_t bridge_mutex = PTHREAD_MUTEX_INITIALIZER;
+pthread_cond_t southbound_cond = PTHREAD_COND_INITIALIZER;
+pthread_cond_t northbound_cond = PTHREAD_COND_INITIALIZER;
+
+int southbound_count = 0;
+int northbound_count = 0;
+
+bool is_bridge_empty = true;
+bool is_southbound_turn = true;
+
+void enter_bridge(bool is_southbound) {
+    pthread_mutex_lock(&bridge_mutex); // 防止第二個不長眼的農民上橋
+
+    if (is_southbound) { 
+        while (!is_bridge_empty || northbound_count > 0 || !is_southbound_turn) { // 有農民在橋上 || 沒輪到
+            pthread_cond_wait(&southbound_cond, &bridge_mutex);
+        }
+
+        is_southbound_turn = false;
+        southbound_count++;
+    } else {
+        while (!is_bridge_empty || southbound_count > 0 || is_southbound_turn) {
+            pthread_cond_wait(&northbound_cond, &bridge_mutex);
+        }
+
+        is_southbound_turn = true;
+        northbound_count++;
+    }
+
+    is_bridge_empty = false;
+    pthread_mutex_unlock(&bridge_mutex);
+}
+
+void exit_bridge(bool is_southbound) {
+    pthread_mutex_lock(&bridge_mutex);
+
+    if (is_southbound) {
+        southbound_count--;
+        is_bridge_empty = (southbound_count == 0 && northbound_count == 0);
+
+        pthread_cond_broadcast(&northbound_cond);
+        pthread_cond_signal(&southbound_cond);
+    } else {
+        northbound_count--;
+        is_bridge_empty = (southbound_count == 0 && northbound_count == 0);
+
+        pthread_cond_broadcast(&southbound_cond);
+        pthread_cond_signal(&northbound_cond);
+    }
+
+    pthread_mutex_unlock(&bridge_mutex);
+}
+
+void cross_bridge(bool is_southbound) {
+    if (is_southbound) {
+        printf("Southbound farmer is crossing the bridge.\n");
+    } else {
+        printf("Northbound farmer is crossing the bridge.\n");
+    }
+
+    // Simulating crossing the bridge
+    sleep(1); // 调整持续时间为需要的值
+}
+
+void *southbound_farmer(void *arg) {
+    while (true) {
+        cross_bridge(true);
+        exit_bridge(true);
+    }
+}
+
+void *northbound_farmer(void *arg) {
+    while (true) {
+        cross_bridge(false);
+        exit_bridge(false);
+    }
+}
+
+int main() {
+    pthread_t northbound_thread, southbound_thread;
+
+    // Create the threads for northbound and southbound farmers
+    pthread_create(&northbound_thread, NULL, northbound_farmer, NULL);
+    pthread_create(&southbound_thread, NULL, southbound_farmer, NULL);
+
+    // Wait for the threads to finish (This part may not be reached in this program)
+    pthread_join(northbound_thread, NULL);
+    pthread_join(southbound_thread, NULL);
+
+    return 0;
+}
