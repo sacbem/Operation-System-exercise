@@ -32,10 +32,10 @@ void create_node_s(frame_stack_t*);
 void print_n(node_t*);
 void print_s(frame_stack_t*);
 void free_node(frame_stack_t*);
-int replace(frame_stack_t*, int);
-int notfound(frame_stack_t*, int);
+int  replace(frame_stack_t*, int);
+int  notfound(frame_stack_t*, int);
 int* create_page_ref_list();
-int lhu_algo(frame_stack_t*);
+int  lhu_algo(frame_stack_t*);
 
 void create_node(node_t** top, int idx) {
     node_t* node = malloc(sizeof(node_t));
