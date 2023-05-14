@@ -6,6 +6,7 @@
 #define PAGE_RANGE 10
 #define STAGING_QUEUE_SIZE 5
 #define DEFAULT -1
+
 typedef struct staging_queue_t staging_queue_t ;
 struct staging_queue_t{
     int queue[STAGING_QUEUE_SIZE];

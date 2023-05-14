@@ -36,6 +36,7 @@ int  replace(frame_stack_t*, int);
 int  notfound(frame_stack_t*, int);
 int* create_page_ref_list();
 int  lhu_algo(frame_stack_t*);
+void print_page_list();
 
 void create_node(node_t** top, int idx) {
     node_t* node = malloc(sizeof(node_t));
@@ -138,15 +139,19 @@ int* create_page_ref_list() {
     return list;
 }
 
-int main() {
-    frame_stack_t stack;
-    ref_list = create_page_ref_list();
-
+void print_page_list(){
     printf("Reference list: ");
     for (int i = 0; i < PAGE_COUNT; i++) {
         printf("%d ", ref_list[i]);
     }
     printf("\n");
+}
+int main() {
+    frame_stack_t stack;
+    ref_list = create_page_ref_list();
+
+    print_page_list();
+
 
     init(&stack);
     stack.print_s(&stack);
