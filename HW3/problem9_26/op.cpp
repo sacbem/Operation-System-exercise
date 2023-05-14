@@ -13,7 +13,7 @@ using namespace std;
 #define ERROR -1
 #define ACCESS_DINED 100000
 
-vector<int> ref_list;
+vector<int> refList;
 void CreatePageList();
 void PrintPageList();
 typedef class Queue Queue;
@@ -49,45 +49,45 @@ void Queue::Print(){
 void CreatePageList() {
     srand(time(NULL));
     for (int i = 0; i < PAGE_COUNT; i++) {
-        ref_list.push_back(rand() % PAGE_RANGE);
+        refList.push_back(rand() % PAGE_RANGE);
     }
 }
 void PrintPageList(){
     cout<<"Reference list: ";
-    for (auto i : ref_list){
+    for (auto i : refList){
         cout<< i << " ";
     }
     cout<< endl;
 }
 int Queue::OPT() {
-    int pg_fault = 0; 
+    int pgFault = 0; 
 
-    for (int n = 0; n < ref_list.size(); n++) {
+    for (int n = 0; n < refList.size(); n++) {
         if (data.size() < STAGING_QUEUE_SIZE) { 
-            if (find(data.begin(), data.end(), ref_list[n]) == data.end()) { 
-                data.push_back(ref_list[n]); 
-                pg_fault++; 
+            if (find(data.begin(), data.end(), refList[n]) == data.end()) { 
+                data.push_back(refList[n]); 
+                pgFault++; 
             }
         }
         else { 
-            if (find(data.begin(), data.end(), ref_list[n]) == data.end()) { 
-                for (int i = n + 1; i < ref_list.size(); i++) {
-                    auto it = find(data.begin(), data.end(), ref_list[i]);
+            if (find(data.begin(), data.end(), refList[n]) == data.end()) { 
+                for (int i = n + 1; i < refList.size(); i++) {
+                    auto it = find(data.begin(), data.end(), refList[i]);
                     if (it != data.end()) {
-                        hisroty_patten.push_back(distance(ref_list.begin() + n, it));
+                        hisroty_patten.push_back(distance(refList.begin() + n, it));
                     }
                     else {
                         hisroty_patten.push_back(ACCESS_DINED);
                     }
                 }
                 auto maxIndex = max_element(hisroty_patten.begin(), hisroty_patten.end()) - hisroty_patten.begin();
-                data[maxIndex] = ref_list[n]; 
-                pg_fault++; 
+                data[maxIndex] = refList[n]; 
+                pgFault++; 
             }
         }
     }
 
-    return pg_fault;
+    return pgFault;
 }
 
 int main (){
@@ -99,7 +99,7 @@ int main (){
 
     res = q.OPT();
     q.Print();
-    cout<<"pg_fault :"<<res<<endl;
+    cout<<"pgFault :"<<res<<endl;
     
     return 0 ;
 }
