@@ -70,8 +70,6 @@ void cross_bridge_northbound() {
     enter_bridge(false);
 
     pthread_mutex_unlock(&bridge_mutex);
-
-    // Simulating crossing the bridge
     printf("Northbound farmer is crossing the bridge.\n");
     sleep(1); 
 
@@ -95,11 +93,9 @@ void *northbound_farmer(void *arg) {
 int main() {
     pthread_t northbound_thread, southbound_thread;
 
-    // Create the threads for northbound and southbound farmers
     pthread_create(&northbound_thread, NULL, northbound_farmer, NULL);
     pthread_create(&southbound_thread, NULL, southbound_farmer, NULL);
 
-    // Wait for the threads to finish (This part may not be reached in this program)
     pthread_join(northbound_thread, NULL);
     pthread_join(southbound_thread, NULL);
 
